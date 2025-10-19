@@ -14,6 +14,7 @@
   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
     <title>Sports Streaming Player</title>
     <style>
         /* Reset and Base Styles */
@@ -24,25 +25,11 @@
         }
 
         :root {
-            /* Light Theme Colors */
+            /* Dark Theme Colors (only) */
             --primary-color: #6366f1;
             --primary-dark: #4f46e5;
             --secondary-color: #f59e0b;
             --accent-color: #10b981;
-            --background-color: #ffffff;
-            --surface-color: #f8fafc;
-            --card-color: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --text-muted: #9ca3af;
-            --border-color: #e5e7eb;
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        [data-theme="dark"] {
-            /* Dark Theme Colors */
             --background-color: #0f172a;
             --surface-color: #1e293b;
             --card-color: #334155;
@@ -52,6 +39,7 @@
             --border-color: #475569;
             --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         body {
@@ -70,23 +58,28 @@
 
         /* Header Styles */
         .header {
-            background: var(--card-color);
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
+            background: transparent;
+            border-bottom: none;
+            box-shadow: none;
             position: sticky;
             top: 0;
             z-index: 100;
+            padding: 0.5rem 0;
         }
 
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.75rem 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 1rem;
+            background: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
         }
 
         .logo {
@@ -216,12 +209,25 @@
             border: none;
         }
 
+        /* Top banner (below navbar) */
+        .top-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            background: transparent;
+        }
+        .top-banner img {
+            max-width: 75%;
+            height: auto;
+        }
+
 
         /* Footer */
         .footer {
-            background: var(--surface-color);
-            border-top: 1px solid var(--border-color);
-            padding: 2rem;
+            background: transparent;
+            border-top: none;
+            padding: 1rem 0;
             margin-top: auto;
         }
 
@@ -233,6 +239,11 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+            background: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            padding: 1rem 1.25rem;
         }
 
         .footer-links {
@@ -346,14 +357,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-theme="dark">
     <div class="container">
         <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-play-circle"></i>
-                    <span>RedZoneTV</span>
+                    <span>TOPREDZONE</span>
                 </div>
                 <nav class="nav" id="nav">
                     <a href="#" class="nav-link active">Live</a>
@@ -366,16 +377,17 @@
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
-                <div class="header-controls">
-                    <button class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
+                <div class="header-controls"></div>
             </div>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
+            <div class="top-banner">
+                <a href="https://sportsurge.net" target="_blank" rel="noopener noreferrer">
+                    <img src="https://truenfl.sbs/ss.png" alt="Banner" />
+                </a>
+            </div>
             <!-- Player Section -->
             <section class="player-section">
                 <div class="player-container">
@@ -407,30 +419,8 @@
     </div>
 
     <script>
-        // Theme Toggle Functionality
-        const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
-
-        // Check for saved theme preference or default to light mode
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        body.setAttribute('data-theme', currentTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            // Update theme toggle icon
-            const icon = themeToggle.querySelector('i');
-            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        });
-
-        // Update initial icon based on theme
-        const icon = themeToggle.querySelector('i');
-        icon.className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-
+        body.setAttribute('data-theme', 'dark');
 
         const streamPlayer = document.getElementById('streamPlayer');
 
